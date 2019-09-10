@@ -8,6 +8,8 @@ namespace FunWithGenericCollections
         static void Main(string[] args)
         {
             UseGenericList();
+            UseGenericStack();
+            UseGenericQueue();
         }
 
         static void UseGenericList()
@@ -43,6 +45,62 @@ namespace FunWithGenericCollections
             }
         }
 
+        static void UseGenericStack()
+        {
+            Stack<Person> stackOfPeople = new Stack<Person>();
+            stackOfPeople.Push(new Person { FirstName = "Homer", LastName = "Simpson", Age = 47 });
+            stackOfPeople.Push(new Person { FirstName = "Marge", LastName = "Simpson", Age = 45 });
+            stackOfPeople.Push(new Person { FirstName = "Lisa", LastName = "Simpson", Age = 9 });
 
+            // Now look at the top item, pop it, and look again.
+            Console.WriteLine("First person is: {0}", stackOfPeople.Peek());
+            Console.WriteLine("Popped off {0}", stackOfPeople.Pop());
+            Console.WriteLine("\nFirst person is: {0}", stackOfPeople.Peek());
+            Console.WriteLine("Popped off {0}", stackOfPeople.Pop());
+            Console.WriteLine("\nFirst person item is: {0}", stackOfPeople.Peek());
+            Console.WriteLine("Popped off {0}", stackOfPeople.Pop());
+
+            try
+            {
+                Console.WriteLine("\nFirst Person is: {0}", stackOfPeople.Peek());
+                Console.WriteLine("Popped off {0}", stackOfPeople.Pop());
+            }
+            catch (InvalidOperationException ex)
+            {
+                Console.WriteLine("\nError! {0}", ex.Message);
+            }
+        }
+
+        static void UseGenericQueue()
+        {
+            // Make a Q with three people.
+            Queue<Person> peopleQ = new Queue<Person>();
+            peopleQ.Enqueue(new Person { FirstName = "Homer", LastName = "Simpson", Age = 47 });
+            peopleQ.Enqueue(new Person { FirstName = "Marge", LastName = "Simpson", Age = 45 });
+            peopleQ.Enqueue(new Person { FirstName = "Lisa", LastName = "Simpson", Age = 9 });
+
+            // Peek at first person in Q.
+            Console.WriteLine("{0} is first in line!", peopleQ.Peek().FirstName);
+
+            // Remove each person from Q.
+            GetCoffee(peopleQ.Dequeue());
+            GetCoffee(peopleQ.Dequeue());
+            GetCoffee(peopleQ.Dequeue());
+
+            // Try to de-Q again?
+            try
+            {
+                GetCoffee(peopleQ.Dequeue());
+            }
+            catch (InvalidOperationException e)
+            {
+                Console.WriteLine("Error! {0}", e.Message);
+            }
+        }
+
+        static void GetCoffee(Person p)
+        {
+            Console.WriteLine("{0} got coffee!", p.FirstName);
+        }
     }
 }
